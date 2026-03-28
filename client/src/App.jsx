@@ -26,23 +26,23 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/trips"
+          element={
+            <PrivateRoute>
+              <Trips />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/trips/:id"
+          element={
+            <PrivateRoute>
+              <TripDetails />
+            </PrivateRoute>
+          }
+        />
       </Routes>
-      <Route
-        path="/trips"
-        element={
-          <PrivateRoute>
-            <Trips />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/trips/:id"
-        element={
-          <PrivateRoute>
-            <TripDetails />
-          </PrivateRoute>
-        }
-      />
     </BrowserRouter>
   );
 }
