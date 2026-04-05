@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import Trips from './pages/Trips';
 import TripDetails from './pages/TripDetails';
+import SharedTrip from './pages/SharedTrip';
 import AITripPlanner from './pages/AITripPlanner';
 import Navbar from './components/Navbar';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/shared/:token" element={<SharedTrip />} />
 
         <Route
           path="/dashboard"

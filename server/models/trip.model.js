@@ -38,8 +38,17 @@ const tripSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        photos: [{
+            url: String,
+            publicId: String
+        }],
         notes: {
             type: String,
+        },
+        shareToken: {
+            type: String,
+            unique: true,
+            sparse: true,
         },
     },
     { timestamps: true }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getTripById } from '../services/tripService';
+import { getTripById, uploadTripPhoto, generateShareToken } from '../services/tripService';
 import { addExpense, getExpenses } from '../services/expenseService';
 
 function TripDetails() {
@@ -9,6 +9,8 @@ function TripDetails() {
     const [trip, setTrip] = useState(null);
     const [expenses, setExpenses] = useState([]);
     const [total, setTotal] = useState(0);
+    const [uploading, setUploading] = useState(false);
+    const [isSharing, setIsSharing] = useState(false);
 
     const [form, setForm] = useState({
         category: 'food',
@@ -54,6 +56,41 @@ function TripDetails() {
         fetchExpenses();
     };
 
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        setUploading(true);
+        try {
+            await uploadTripPhoto(id, formData);
+            fetchTrip(); // Refresh to get the new photos
+        } catch (error) {
+            console.error(error);
+            alert('Failed to upload photo');
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    const handleShareClick = async () => {
+        setIsSharing(true);
+        try {
+            const res = await generateShareToken(id);
+            const token = res.data.data.token;
+            const shareUrl = `${window.location.origin}/shared/${token}`;
+            await navigator.clipboard.writeText(shareUrl);
+            alert('Link copied to clipboard! You can now share this trip with friends.');
+        } catch (error) {
+            console.error(error);
+            alert('Failed to generate sharing link.');
+        } finally {
+            setIsSharing(false);
+        }
+    };
+
     if (!trip) {
         return (
             <div className="min-h-screen hero-gradient flex items-center justify-center">
@@ -81,19 +118,29 @@ function TripDetails() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10"></div>
                     <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-1000"></div>
                     
-                    <div className="relative z-20 space-y-2">
-                        <div className="flex items-center gap-3">
-                            <span className={`px-3 py-1 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-[0.2em] border ${categoryConfig[trip.category || 'Other'].color}`}>
-                                {categoryConfig[trip.category || 'Other'].icon} {trip.category || 'Other'}
-                            </span>
+                    <div className="relative z-20 space-y-2 w-full flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+                        <div>
+                            <div className="flex items-center gap-3">
+                                <span className={`px-3 py-1 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-[0.2em] border ${categoryConfig[trip.category || 'Other'].color}`}>
+                                    {categoryConfig[trip.category || 'Other'].icon} {trip.category || 'Other'}
+                                </span>
+                            </div>
+                            <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase italic mt-2">
+                                {trip.destination}
+                            </h1>
+                            <p className="text-indigo-100 font-bold tracking-widest text-xs">
+                                {new Date(trip.startDate).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })} —{' '}
+                                {new Date(trip.endDate).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
+                            </p>
                         </div>
-                        <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase italic">
-                            {trip.destination}
-                        </h1>
-                        <p className="text-indigo-100 font-bold tracking-widest text-xs">
-                            {new Date(trip.startDate).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })} —{' '}
-                            {new Date(trip.endDate).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
-                        </p>
+                        
+                        <button
+                            onClick={handleShareClick}
+                            disabled={isSharing}
+                            className="px-6 py-3 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold hover:bg-white/20 transition-all flex items-center justify-center gap-2 shadow-xl whitespace-nowrap"
+                        >
+                            {isSharing ? 'Generating...' : '🔗 Share Trip'}
+                        </button>
                     </div>
                 </div>
 
@@ -212,6 +259,60 @@ function TripDetails() {
                                 ))
                             )}
                         </div>
+                    </div>
+
+                    {/* Trip Memories / Gallery Section */}
+                    <div className="lg:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        <div className="flex items-center justify-between mb-8">
+                            <h2 className="text-3xl font-black tracking-tight flex items-center gap-3">
+                                <span>📸</span>
+                                <span>Trip Memories</span>
+                            </h2>
+                            
+                            <div className="relative overflow-hidden group">
+                                <input 
+                                    type="file" 
+                                    onChange={handleFileChange} 
+                                    accept="image/*"
+                                    className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full"
+                                    disabled={uploading}
+                                />
+                                <button 
+                                    disabled={uploading}
+                                    className="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center gap-2 group-hover:-translate-y-1 active:translate-y-0"
+                                >
+                                    {uploading ? (
+                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    ) : (
+                                        <span>+ Add Photo</span>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {trip.photos && trip.photos.length > 0 ? (
+                            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                                {trip.photos.map((photo, idx) => (
+                                    <div key={idx} className="break-inside-avoid relative group rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-indigo-100 transition-all border border-transparent hover:border-indigo-100 bg-white">
+                                        <img 
+                                            src={photo.url} 
+                                            alt="Trip memory" 
+                                            loading="lazy"
+                                            className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                                            <span className="text-white font-bold text-sm tracking-widest uppercase">Memory {idx + 1}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="glass p-16 rounded-[3rem] text-center border-dashed border-2 border-slate-200 bg-slate-50/50">
+                                <div className="text-5xl mb-4 opacity-50">🖼️</div>
+                                <h3 className="text-xl font-bold text-slate-400">No photos uploaded yet</h3>
+                                <p className="text-slate-400 text-sm mt-2">Upload your favorite memories to build your gallery.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

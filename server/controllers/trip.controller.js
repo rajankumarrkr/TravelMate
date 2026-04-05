@@ -4,6 +4,9 @@ const {
     getUserTrips,
     getTripById,
     deleteTrip,
+    addPhotoToTrip,
+    generateShareToken,
+    getSharedTripByToken,
 } = require('../services/trip.service');
 
 // Create Trip
@@ -47,9 +50,54 @@ const deleteTripController = asyncHandler(async (req, res) => {
     });
 });
 
+// Upload trip photo
+const uploadTripPhotoController = asyncHandler(async (req, res) => {
+    if (!req.file) {
+        res.status(400);
+        throw new Error('Please upload an image file');
+    }
+
+    const photoData = {
+        url: req.file.path,
+        publicId: req.file.filename,
+    };
+
+    const trip = await addPhotoToTrip(req.params.id, req.user._id, photoData);
+
+    res.status(200).json({
+        success: true,
+        message: 'Photo uploaded successfully',
+        data: trip.photos,
+    });
+});
+
+// Generate Share Token
+const generateShareTokenController = asyncHandler(async (req, res) => {
+    const token = await generateShareToken(req.params.id, req.user._id);
+
+    res.status(200).json({
+        success: true,
+        message: 'Share token generated successfully',
+        data: { token },
+    });
+});
+
+// Get Shared Trip (Public)
+const getSharedTripController = asyncHandler(async (req, res) => {
+    const trip = await getSharedTripByToken(req.params.token);
+
+    res.status(200).json({
+        success: true,
+        data: trip,
+    });
+});
+
 module.exports = {
     createTripController,
     getTripsController,
     getTripController,
     deleteTripController,
+    uploadTripPhotoController,
+    generateShareTokenController,
+    getSharedTripController,
 };

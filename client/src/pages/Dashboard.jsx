@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { getDashboard } from '../services/dashboardService';
 import { Link, useNavigate } from 'react-router-dom';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
+import { useTranslation } from 'react-i18next';
+
+const COLORS = ['#4f46e5', '#10b981', '#f59e0b', '#ec4899', '#06b6d4', '#8b5cf6'];
 
 function Dashboard() {
+    const { t } = useTranslation();
     const [data, setData] = useState(null);
     const navigate = useNavigate();
 
@@ -44,8 +49,8 @@ function Dashboard() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-12">
                     <div className="space-y-1">
-                        <h1 className="text-4xl font-extrabold tracking-tight">TravelMate Dashboard</h1>
-                        <p className="text-slate-500 font-medium">Welcome back! Here's what's happening with your trips.</p>
+                        <h1 className="text-4xl font-extrabold tracking-tight">{t('dashboard.title')}</h1>
+                        <p className="text-slate-500 font-medium">{t('dashboard.subtitle')}</p>
                     </div>
 
                     <div className="flex gap-4">
@@ -53,7 +58,7 @@ function Dashboard() {
                             to="/trips"
                             className="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:shadow-xl hover:shadow-indigo-200 transition-all flex items-center gap-2"
                         >
-                            <span>Manage Trips</span>
+                            <span>{t('dashboard.manage_trips')}</span>
                             <span className="text-xl">✈️</span>
                         </Link>
 
@@ -62,7 +67,7 @@ function Dashboard() {
                             className="px-6 py-3 bg-white text-indigo-600 border border-indigo-100 rounded-2xl font-bold hover:shadow-xl hover:shadow-indigo-100 transition-all flex items-center gap-2"
                         >
                             <span className="text-xl">✨</span>
-                            <span>Magic AI Planner</span>
+                            <span>{t('navbar.magic_ai')}</span>
                         </Link>
 
                         <button
@@ -74,44 +79,176 @@ function Dashboard() {
                     </div>
                 </div>
 
+                {/* Notification Center */}
+                {data.notifications && data.notifications.length > 0 && (
+                    <div className="mb-12 space-y-4">
+                        {data.notifications.map((note) => (
+                            <div 
+                                key={note.id} 
+                                className={`flex items-center gap-4 p-4 rounded-2xl border ${
+                                    note.isCritical 
+                                        ? 'bg-rose-50 border-rose-200 text-rose-800' 
+                                        : note.type === 'reminder'
+                                        ? 'bg-indigo-50 border-indigo-200 text-indigo-800'
+                                        : 'bg-amber-50 border-amber-200 text-amber-800'
+                                } shadow-sm animate-in fade-in slide-in-from-top-4`}
+                            >
+                                <div className="text-2xl">
+                                    {note.type === 'reminder' ? '📅' : note.isCritical ? '🚨' : '⚠️'}
+                                </div>
+                                <div>
+                                    <h3 className="font-black text-sm uppercase tracking-widest opacity-80 mb-0.5">{note.title}</h3>
+                                    <p className="font-semibold text-sm">{note.message}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                    <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-indigo-100 transition-all border-b-4 border-indigo-500 group">
-                        <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">📅</div>
-                        <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Total Trips</h2>
-                        <p className="text-4xl font-black text-slate-800">{data.totalTrips}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 mb-16">
+                    <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-indigo-100 transition-all border-b-4 border-indigo-500 group flex flex-col justify-between">
+                        <div>
+                            <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">📅</div>
+                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.total_trips')}</h2>
+                            <p className="text-4xl font-black text-slate-800">{data.totalTrips}</p>
+                        </div>
                     </div>
 
-                    <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-emerald-100 transition-all border-b-4 border-emerald-500 group">
-                        <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">💰</div>
-                        <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Total Expenses</h2>
-                        <p className="text-4xl font-black text-emerald-600">
-                            ₹{data.totalExpenses}
-                        </p>
+                    <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-emerald-100 transition-all border-b-4 border-emerald-500 group flex flex-col justify-between">
+                        <div>
+                            <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">💰</div>
+                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.total_expenses')}</h2>
+                            <p className="text-4xl font-black text-emerald-600">
+                                ₹{data.totalExpenses}
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-cyan-100 transition-all border-b-4 border-cyan-500 group sm:col-span-2 lg:col-span-1">
-                        <div className="w-12 h-12 bg-cyan-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🌍</div>
-                        <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Upcoming Trips</h2>
-                        <p className="text-4xl font-black text-cyan-600">
-                            {data.upcomingTripsCount}
+                    <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-cyan-100 transition-all border-b-4 border-cyan-500 group flex flex-col justify-between">
+                        <div>
+                            <div className="w-12 h-12 bg-cyan-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🌍</div>
+                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.upcoming_trips')}</h2>
+                            <p className="text-4xl font-black text-cyan-600">
+                                {data.upcomingTripsCount}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-purple-100 transition-all border-b-4 border-purple-500 group flex flex-col justify-between">
+                        <div>
+                            <div className="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">⏳</div>
+                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.days_traveled')}</h2>
+                            <p className="text-4xl font-black text-purple-600">
+                                {data.totalDaysTraveled || 0}
+                            </p>
+                        </div>
+                        <p className="text-xs text-slate-400 font-bold mt-4 uppercase tracking-widest bg-slate-50 py-1.5 px-3 rounded-lg inline-block w-fit">
+                            {t('dashboard.avg_days', { count: data.avgTripDuration || 0 })}
                         </p>
+                    </div>
+                </div>
+
+                {/* Advanced Analytics */}
+                <div className="mb-16">
+                    <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-2xl font-bold tracking-tight">{t('dashboard.advanced_analytics')}</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* Expense by Category Chart */}
+                        <div className="glass p-8 rounded-3xl shadow-sm w-full">
+                            <h3 className="text-lg font-bold text-slate-800 mb-6">{t('dashboard.expense_by_category')}</h3>
+                            {data.expenseByCategory && data.expenseByCategory.length > 0 ? (
+                                <div className="h-80">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <PieChart>
+                                            <Pie
+                                                data={data.expenseByCategory}
+                                                cx="50%"
+                                                cy="50%"
+                                                innerRadius={80}
+                                                outerRadius={110}
+                                                paddingAngle={5}
+                                                dataKey="value"
+                                                stroke="none"
+                                            >
+                                                {data.expenseByCategory.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip 
+                                                formatter={(value) => `₹${value.toLocaleString()}`}
+                                                contentStyle={{ borderRadius: '1rem', border: 'none', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)' }}
+                                            />
+                                            <Legend verticalAlign="bottom" height={36} iconType="circle" />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            ) : (
+                                <div className="h-80 flex items-center justify-center text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                                    {t('dashboard.no_expense_data')}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Monthly Spending Chart */}
+                        <div className="glass p-8 rounded-3xl shadow-sm w-full">
+                            <h3 className="text-lg font-bold text-slate-800 mb-6">{t('dashboard.monthly_spending')}</h3>
+                            {data.monthlySpending && data.monthlySpending.length > 0 ? (
+                                <div className="h-80">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart data={data.monthlySpending} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                                            <XAxis 
+                                                dataKey="month" 
+                                                axisLine={false} 
+                                                tickLine={false} 
+                                                tick={{ fill: '#64748b', fontSize: 12, fontWeight: 600 }} 
+                                                dy={10}
+                                            />
+                                            <YAxis 
+                                                axisLine={false} 
+                                                tickLine={false} 
+                                                tick={{ fill: '#64748b', fontSize: 12, fontWeight: 600 }}
+                                                tickFormatter={(value) => `₹${value}`}
+                                            />
+                                            <Tooltip 
+                                                cursor={{ fill: '#f8fafc' }}
+                                                formatter={(value) => [`₹${value.toLocaleString()}`, 'Spent']}
+                                                contentStyle={{ borderRadius: '1rem', border: 'none', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)' }}
+                                            />
+                                            <Bar 
+                                                dataKey="amount" 
+                                                fill="#4f46e5" 
+                                                radius={[6, 6, 6, 6]} 
+                                                barSize={40}
+                                            />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            ) : (
+                                <div className="h-80 flex items-center justify-center text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                                    {t('dashboard.no_timeline_data')}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 
                 {/* Recent Trips Section */}
                 <div>
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-2xl font-bold tracking-tight">Recent Adventures</h2>
-                        <Link to="/trips" className="text-sm font-bold text-indigo-600 hover:underline">View All</Link>
+                        <h2 className="text-2xl font-bold tracking-tight">{t('dashboard.recent_adventures')}</h2>
+                        <Link to="/trips" className="text-sm font-bold text-indigo-600 hover:underline">{t('dashboard.view_all')}</Link>
                     </div>
 
                     {data.recentTrips.length === 0 ? (
                         <div className="glass p-12 rounded-3xl text-center">
                             <div className="text-5xl mb-4">🎒</div>
-                            <h3 className="text-xl font-bold text-slate-800 mb-2">No trips yet</h3>
+                            <h3 className="text-xl font-bold text-slate-800 mb-2">{t('dashboard.no_trips_yet')}</h3>
                             <p className="text-slate-500 mb-6">Start your journey by creating your first trip.</p>
-                            <Link to="/trips" className="text-indigo-600 font-bold hover:underline">Create a trip now &rarr;</Link>
+                            <Link to="/trips" className="text-indigo-600 font-bold hover:underline">{t('dashboard.create_trip_now')}</Link>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

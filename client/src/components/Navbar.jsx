@@ -1,8 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Navbar() {
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
+
+    const toggleLanguage = () => {
+        const newLang = i18n.language === 'en' ? 'hi' : 'en';
+        i18n.changeLanguage(newLang);
+    };
 
     const logout = () => {
         localStorage.removeItem('token');
@@ -17,25 +24,31 @@ function Navbar() {
                 </Link>
 
                 <div className="flex items-center gap-6">
+                    <button 
+                        onClick={toggleLanguage} 
+                        className="text-sm font-bold bg-slate-100 px-3 py-1.5 rounded-lg hover:bg-slate-200 transition-colors hidden sm:block"
+                    >
+                        🌐 {i18n.language === 'en' ? 'HI' : 'EN'}
+                    </button>
                     {token ? (
                         <>
                             <Link to="/ai-planner" className="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-2 rounded-xl border border-indigo-100/50 hover:bg-indigo-600 hover:text-white transition-all group">
-                                <span className="mr-1 group-hover:animate-bounce inline-block">✨</span> Magic AI
+                                <span className="mr-1 group-hover:animate-bounce inline-block">✨</span> {t('navbar.magic_ai')}
                             </Link>
-                            <Link to="/dashboard" className="text-sm font-medium hover:text-indigo-600">Dashboard</Link>
-                            <Link to="/trips" className="text-sm font-medium hover:text-indigo-600">My Trips</Link>
+                            <Link to="/dashboard" className="text-sm font-medium hover:text-indigo-600">{t('navbar.dashboard')}</Link>
+                            <Link to="/trips" className="text-sm font-medium hover:text-indigo-600">{t('navbar.trips')}</Link>
                             <button 
                                 onClick={logout} 
                                 className="px-4 py-2 bg-rose-500/10 text-rose-600 rounded-xl text-sm font-semibold hover:bg-rose-500 hover:text-white transition-all shadow-sm"
                             >
-                                Logout
+                                {t('navbar.logout')}
                             </button>
                         </>
                     ) : (
                         <div className="flex gap-4">
-                            <Link to="/login" className="text-sm font-medium hover:text-indigo-600 self-center">Login</Link>
+                            <Link to="/login" className="text-sm font-medium hover:text-indigo-600 self-center">{t('navbar.login')}</Link>
                             <Link to="/register" className="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 hover:shadow-lg transition-all shadow-indigo-200">
-                                Sign Up
+                                {t('navbar.signup')}
                             </Link>
                         </div>
                     )}

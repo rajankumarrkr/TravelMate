@@ -1,6 +1,7 @@
 const Trip = require('../models/trip.model');
 const ApiError = require('../utils/apiError');
 const { generateAIItinerary } = require('./itinerary.service');
+const crypto = require('crypto');
 
 /**
  * @desc    Create a new trip with auto-generated itinerary
@@ -119,10 +120,60 @@ const updateTrip = async (tripId, userId, data) => {
     return trip;
 };
 
+/**
+ * @desc    Add photo to a trip
+ */
+const addPhotoToTrip = async (tripId, userId, photoData) => {
+    const trip = await Trip.findOne({ _id: tripId, user: userId });
+
+    if (!trip) {
+        throw new ApiError(404, 'Trip not found');
+    }
+
+    trip.photos.push(photoData);
+    await trip.save();
+
+    return trip;
+};
+
+/**
+ * @desc    Generate a share token for a trip
+ */
+const generateShareToken = async (tripId, userId) => {
+    let trip = await Trip.findOne({ _id: tripId, user: userId });
+
+    if (!trip) {
+        throw new ApiError(404, 'Trip not found');
+    }
+
+    if (!trip.shareToken) {
+        trip.shareToken = crypto.randomUUID();
+        await trip.save();
+    }
+
+    return trip.shareToken;
+};
+
+/**
+ * @desc    Get trip by share token (Public)
+ */
+const getSharedTripByToken = async (shareToken) => {
+    const trip = await Trip.findOne({ shareToken }).select('-budget'); // Exclude sensitive fields if needed
+
+    if (!trip) {
+        throw new ApiError(404, 'Shared trip not found or link has expired');
+    }
+
+    return trip;
+};
+
 module.exports = {
     createTrip,
     getUserTrips,
     getTripById,
     deleteTrip,
     updateTrip,
+    addPhotoToTrip,
+    generateShareToken,
+    getSharedTripByToken,
 };
