@@ -10,6 +10,7 @@ import TripDetails from './pages/TripDetails';
 import SharedTrip from './pages/SharedTrip';
 import AITripPlanner from './pages/AITripPlanner';
 import Navbar from './components/Navbar';
+import BottomNav from './components/BottomNav';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           }
         />
       </Routes>
+      <BottomNav />
     </BrowserRouter>
   );
 }

@@ -1,65 +1,90 @@
 import { Link } from 'react-router-dom';
 
+const features = [
+    { title: 'Smart Itineraries', desc: 'AI-powered daily plans for every destination.', icon: '🗺️' },
+    { title: 'Expense Tracking', desc: 'Keep your budget in check while roaming.', icon: '💰' },
+    { title: 'Share & Explore', desc: 'Share trips with friends via a public link.', icon: '🔗' },
+];
+
 function Home() {
     return (
-        <div className="min-h-screen hero-gradient dark:bg-slate-900 pt-32 px-6 flex flex-col items-center text-center">
-            {/* Hero Section */}
-            <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-5 duration-1000">
-                <span className="px-4 py-1.5 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-bold tracking-wider uppercase">
-                    Your Ultimate Travel Companion
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
+            {/* Hero */}
+            <div className="max-w-5xl mx-auto px-4 pt-28 pb-16 flex flex-col items-center text-center">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
+                    ✨ Your Ultimate Travel Companion
                 </span>
-                
-                <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                    Plan smarter, travel <br />
+
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.12] mb-6">
+                    Plan smarter,<br />
+                    travel{' '}
                     <span className="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent">
-                        without boundaries.
+                        without limits.
                     </span>
                 </h1>
-                
-                <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                    Organize your itineraries, track travel expenses, and discover new horizons with 
-                    TravelMate. The all-in-one platform for modern adventurers.
+
+                <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-xl mb-10 leading-relaxed">
+                    Organize itineraries, track expenses, and explore the world — all in one beautifully designed app.
                 </p>
 
-                <div className="flex flex-wrap justify-center gap-4 pt-4">
-                    <Link 
-                        to="/register" 
-                        className="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:shadow-2xl hover:shadow-indigo-200 transition-all scale-100 hover:scale-105 active:scale-95"
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <Link
+                        to="/register"
+                        className="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold text-base hover:bg-indigo-700 hover:shadow-2xl hover:shadow-indigo-200 hover:-translate-y-0.5 transition-all active:scale-95 text-center"
                     >
-                        Get Started for Free
+                        Get Started — It's Free
                     </Link>
-                    <Link 
-                        to="/login" 
-                        className="px-8 py-4 glass text-slate-900 dark:text-white rounded-2xl font-bold hover:bg-white/50 dark:hover:bg-white/10 transition-all"
+                    <Link
+                        to="/login"
+                        className="px-8 py-4 glass text-slate-800 dark:text-white rounded-2xl font-bold text-base hover:shadow-lg hover:-translate-y-0.5 transition-all text-center"
                     >
-                        Sign In
+                        Sign In →
                     </Link>
                 </div>
             </div>
 
-            {/* Visual Asset Section */}
-            <div className="mt-16 w-full max-w-5xl relative group">
-                <div className="absolute inset-0 bg-indigo-400/20 blur-3xl rounded-full scale-90 opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <img 
-                    src="/travel_hero_illustration_1774728345179.png" 
-                    alt="Travel Illustration" 
-                    className="relative rounded-3xl shadow-2xl border border-white/20 transform group-hover:-translate-y-2 transition-transform duration-500"
-                />
-            </div>
-
-            {/* Features Preview */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 mb-20 max-w-6xl w-full">
-                {[
-                    { title: "Smart Itineraries", desc: "Plan every day with precision and ease.", icon: "🗺️" },
-                    { title: "Expense Tracking", desc: "Keep your budget in check while roaming.", icon: "💰" },
-                    { title: "Global Sync", desc: "Access your plans from any device, anywhere.", icon: "🌍" }
-                ].map((feature, idx) => (
-                    <div key={idx} className="glass p-8 rounded-3xl text-left hover:border-indigo-200 transition-colors group">
-                        <div className="text-4xl mb-4 group-hover:scale-125 transition-transform inline-block">{feature.icon}</div>
-                        <h3 className="text-xl font-bold mb-2 dark:text-white">{feature.title}</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
+            {/* Feature Cards */}
+            <div className="max-w-5xl mx-auto px-4 pb-24 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {features.map((f, i) => (
+                    <div
+                        key={i}
+                        className="glass p-6 rounded-3xl hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-1 transition-all duration-300 text-left group cursor-default"
+                    >
+                        <div className="text-3xl mb-4 group-hover:scale-110 transition-transform inline-block">{f.icon}</div>
+                        <h3 className="font-black text-slate-800 dark:text-white text-lg mb-1">{f.title}</h3>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{f.desc}</p>
                     </div>
                 ))}
+            </div>
+
+            {/* Stats strip */}
+            <div className="glass border-t border-b border-white/30 dark:border-slate-700/40 py-8">
+                <div className="max-w-5xl mx-auto px-4 grid grid-cols-3 gap-4 text-center">
+                    {[
+                        { val: '10K+', label: 'Trips Planned' },
+                        { val: '50+', label: 'Countries' },
+                        { val: '4.9 ⭐', label: 'User Rating' },
+                    ].map((s, i) => (
+                        <div key={i}>
+                            <p className="text-2xl sm:text-3xl font-black text-indigo-600">{s.val}</p>
+                            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-semibold mt-1">{s.label}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* CTA Banner */}
+            <div className="max-w-5xl mx-auto px-4 py-16 text-center">
+                <div className="bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-3xl p-8 sm:p-12 text-white shadow-2xl shadow-indigo-200 dark:shadow-indigo-900/30">
+                    <h2 className="text-2xl sm:text-3xl font-black mb-3">Ready for your next adventure?</h2>
+                    <p className="text-indigo-100 mb-6 text-sm sm:text-base">Join thousands of travelers using TravelMate every day.</p>
+                    <Link
+                        to="/register"
+                        className="inline-block px-8 py-3.5 bg-white text-indigo-700 rounded-2xl font-black text-sm hover:bg-indigo-50 hover:shadow-xl transition-all active:scale-95"
+                    >
+                        Start Planning Now →
+                    </Link>
+                </div>
             </div>
         </div>
     );
