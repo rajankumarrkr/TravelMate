@@ -9,6 +9,7 @@ const COLORS = ['#4f46e5', '#10b981', '#f59e0b', '#ec4899', '#06b6d4', '#8b5cf6'
 function Dashboard() {
     const { t } = useTranslation();
     const [data, setData] = useState(null);
+    const [deferredPrompt, setDeferredPrompt] = useState(window.deferredPrompt || null);
     const navigate = useNavigate();
 
     // Fetch dashboard data
@@ -24,7 +25,29 @@ function Dashboard() {
         };
 
         fetchData();
+
+        const handleBeforeInstallPrompt = (e) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+            window.deferredPrompt = e;
+        };
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
     }, []);
+
+    const handleInstallClick = async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            setDeferredPrompt(null);
+            window.deferredPrompt = null;
+        }
+    };
 
     // Logout handler
     const handleLogout = () => {
@@ -53,7 +76,7 @@ function Dashboard() {
                         <p className="text-slate-500 dark:text-slate-400 font-medium">{t('dashboard.subtitle')}</p>
                     </div>
 
-                    <div className="flex gap-4">
+                    <div className="flex flex-wrap gap-4">
                         <Link
                             to="/trips"
                             className="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:shadow-xl hover:shadow-indigo-200 transition-all flex items-center gap-2"
@@ -67,8 +90,18 @@ function Dashboard() {
                             className="px-6 py-3 bg-white text-indigo-600 border border-indigo-100 rounded-2xl font-bold hover:shadow-xl hover:shadow-indigo-100 transition-all flex items-center gap-2"
                         >
                             <span className="text-xl">✨</span>
-                            <span>{t('navbar.magic_ai')}</span>
+                            <span className="hidden sm:inline">{t('navbar.magic_ai')}</span>
                         </Link>
+
+                        {deferredPrompt && (
+                            <button
+                                onClick={handleInstallClick}
+                                className="px-6 py-3 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-2xl font-bold hover:bg-indigo-100 transition-all flex items-center gap-2 animate-pulse"
+                            >
+                                <span className="text-xl">📱</span>
+                                <span>Install App</span>
+                            </button>
+                        )}
 
                         <button
                             onClick={handleLogout}
