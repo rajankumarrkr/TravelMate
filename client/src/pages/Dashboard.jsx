@@ -44,13 +44,13 @@ function Dashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 pt-28 pb-20 px-6 sm:px-10">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-28 pb-20 px-6 sm:px-10">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-12">
                     <div className="space-y-1">
-                        <h1 className="text-4xl font-extrabold tracking-tight">{t('dashboard.title')}</h1>
-                        <p className="text-slate-500 font-medium">{t('dashboard.subtitle')}</p>
+                        <h1 className="text-4xl font-extrabold tracking-tight dark:text-white">{t('dashboard.title')}</h1>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium">{t('dashboard.subtitle')}</p>
                     </div>
 
                     <div className="flex gap-4">
@@ -72,7 +72,7 @@ function Dashboard() {
 
                         <button
                             onClick={handleLogout}
-                            className="px-6 py-3 glass text-rose-600 rounded-2xl font-bold hover:bg-rose-50 transition-all border border-rose-100"
+                            className="px-6 py-3 glass text-rose-600 rounded-2xl font-bold hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-all border border-rose-100 dark:border-rose-900"
                         >
                             Logout
                         </button>
@@ -109,16 +109,16 @@ function Dashboard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 mb-16">
                     <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-indigo-100 transition-all border-b-4 border-indigo-500 group flex flex-col justify-between">
                         <div>
-                            <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">📅</div>
-                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.total_trips')}</h2>
-                            <p className="text-4xl font-black text-slate-800">{data.totalTrips}</p>
+                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">📅</div>
+                            <h2 className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">{t('dashboard.total_trips')}</h2>
+                            <p className="text-4xl font-black text-slate-800 dark:text-white">{data.totalTrips}</p>
                         </div>
                     </div>
 
                     <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-emerald-100 transition-all border-b-4 border-emerald-500 group flex flex-col justify-between">
                         <div>
-                            <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">💰</div>
-                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.total_expenses')}</h2>
+                            <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">💰</div>
+                            <h2 className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">{t('dashboard.total_expenses')}</h2>
                             <p className="text-4xl font-black text-emerald-600">
                                 ₹{data.totalExpenses}
                             </p>
@@ -127,8 +127,8 @@ function Dashboard() {
 
                     <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-cyan-100 transition-all border-b-4 border-cyan-500 group flex flex-col justify-between">
                         <div>
-                            <div className="w-12 h-12 bg-cyan-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🌍</div>
-                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.upcoming_trips')}</h2>
+                            <div className="w-12 h-12 bg-cyan-50 dark:bg-cyan-900/30 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🌍</div>
+                            <h2 className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">{t('dashboard.upcoming_trips')}</h2>
                             <p className="text-4xl font-black text-cyan-600">
                                 {data.upcomingTripsCount}
                             </p>
@@ -137,13 +137,13 @@ function Dashboard() {
                     
                     <div className="glass p-8 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-purple-100 transition-all border-b-4 border-purple-500 group flex flex-col justify-between">
                         <div>
-                            <div className="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">⏳</div>
-                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{t('dashboard.days_traveled')}</h2>
+                            <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">⏳</div>
+                            <h2 className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">{t('dashboard.days_traveled')}</h2>
                             <p className="text-4xl font-black text-purple-600">
                                 {data.totalDaysTraveled || 0}
                             </p>
                         </div>
-                        <p className="text-xs text-slate-400 font-bold mt-4 uppercase tracking-widest bg-slate-50 py-1.5 px-3 rounded-lg inline-block w-fit">
+                        <p className="text-xs text-slate-400 font-bold mt-4 uppercase tracking-widest bg-slate-50 dark:bg-slate-800 py-1.5 px-3 rounded-lg inline-block w-fit">
                             {t('dashboard.avg_days', { count: data.avgTripDuration || 0 })}
                         </p>
                     </div>
@@ -152,13 +152,13 @@ function Dashboard() {
                 {/* Advanced Analytics */}
                 <div className="mb-16">
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-2xl font-bold tracking-tight">{t('dashboard.advanced_analytics')}</h2>
+                        <h2 className="text-2xl font-bold tracking-tight dark:text-white">{t('dashboard.advanced_analytics')}</h2>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Expense by Category Chart */}
                         <div className="glass p-8 rounded-3xl shadow-sm w-full">
-                            <h3 className="text-lg font-bold text-slate-800 mb-6">{t('dashboard.expense_by_category')}</h3>
+                            <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-6">{t('dashboard.expense_by_category')}</h3>
                             {data.expenseByCategory && data.expenseByCategory.length > 0 ? (
                                 <div className="h-80">
                                     <ResponsiveContainer width="100%" height="100%">
@@ -194,7 +194,7 @@ function Dashboard() {
 
                         {/* Monthly Spending Chart */}
                         <div className="glass p-8 rounded-3xl shadow-sm w-full">
-                            <h3 className="text-lg font-bold text-slate-800 mb-6">{t('dashboard.monthly_spending')}</h3>
+                        <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">{t('dashboard.monthly_spending')}</h2>
                             {data.monthlySpending && data.monthlySpending.length > 0 ? (
                                 <div className="h-80">
                                     <ResponsiveContainer width="100%" height="100%">
@@ -239,15 +239,15 @@ function Dashboard() {
                 {/* Recent Trips Section */}
                 <div>
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-2xl font-bold tracking-tight">{t('dashboard.recent_adventures')}</h2>
+                        <h2 className="text-2xl font-bold tracking-tight dark:text-white">{t('dashboard.recent_adventures')}</h2>
                         <Link to="/trips" className="text-sm font-bold text-indigo-600 hover:underline">{t('dashboard.view_all')}</Link>
                     </div>
 
                     {data.recentTrips.length === 0 ? (
                         <div className="glass p-12 rounded-3xl text-center">
                             <div className="text-5xl mb-4">🎒</div>
-                            <h3 className="text-xl font-bold text-slate-800 mb-2">{t('dashboard.no_trips_yet')}</h3>
-                            <p className="text-slate-500 mb-6">Start your journey by creating your first trip.</p>
+                            <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{t('dashboard.no_trips_yet')}</h3>
+                            <p className="text-slate-500 dark:text-slate-400 mb-6">Start your journey by creating your first trip.</p>
                             <Link to="/trips" className="text-indigo-600 font-bold hover:underline">{t('dashboard.create_trip_now')}</Link>
                         </div>
                     ) : (
@@ -259,9 +259,9 @@ function Dashboard() {
                                     className="glass p-6 rounded-3xl hover:border-indigo-200 hover:shadow-lg transition-all cursor-pointer group flex items-center justify-between gap-4"
                                 >
                                     <div className="flex items-center gap-5">
-                                        <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-indigo-50 transition-colors">📍</div>
+                                        <div className="w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/40 transition-colors">📍</div>
                                         <div>
-                                            <h3 className="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                            <h3 className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-indigo-600 transition-colors">
                                                 {trip.destination}
                                             </h3>
                                             <p className="text-sm font-medium text-slate-400">

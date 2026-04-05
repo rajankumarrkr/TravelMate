@@ -2,21 +2,21 @@ import { Link } from 'react-router-dom';
 
 function Home() {
     return (
-        <div className="min-h-screen hero-gradient pt-32 px-6 flex flex-col items-center text-center">
+        <div className="min-h-screen hero-gradient dark:bg-slate-900 pt-32 px-6 flex flex-col items-center text-center">
             {/* Hero Section */}
             <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-5 duration-1000">
-                <span className="px-4 py-1.5 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold tracking-wider uppercase">
+                <span className="px-4 py-1.5 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-bold tracking-wider uppercase">
                     Your Ultimate Travel Companion
                 </span>
                 
-                <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight">
+                <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                     Plan smarter, travel <br />
                     <span className="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent">
                         without boundaries.
                     </span>
                 </h1>
                 
-                <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
                     Organize your itineraries, track travel expenses, and discover new horizons with 
                     TravelMate. The all-in-one platform for modern adventurers.
                 </p>
@@ -30,7 +30,7 @@ function Home() {
                     </Link>
                     <Link 
                         to="/login" 
-                        className="px-8 py-4 glass text-slate-900 rounded-2xl font-bold hover:bg-white/50 transition-all"
+                        className="px-8 py-4 glass text-slate-900 dark:text-white rounded-2xl font-bold hover:bg-white/50 dark:hover:bg-white/10 transition-all"
                     >
                         Sign In
                     </Link>
@@ -56,8 +56,8 @@ function Home() {
                 ].map((feature, idx) => (
                     <div key={idx} className="glass p-8 rounded-3xl text-left hover:border-indigo-200 transition-colors group">
                         <div className="text-4xl mb-4 group-hover:scale-125 transition-transform inline-block">{feature.icon}</div>
-                        <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                        <p className="text-slate-500 text-sm leading-relaxed">{feature.desc}</p>
+                        <h3 className="text-xl font-bold mb-2 dark:text-white">{feature.title}</h3>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
                     </div>
                 ))}
             </div>

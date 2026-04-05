@@ -84,12 +84,12 @@ function Trips() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 pt-28 pb-20 px-6 sm:px-10">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-28 pb-20 px-6 sm:px-10">
             <div className="max-w-5xl mx-auto">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12 border-b border-slate-200 pb-8">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12 border-b border-slate-200 dark:border-slate-700 pb-8">
                     <div className="space-y-1">
-                        <h1 className="text-4xl font-extrabold tracking-tight">Your Journeys 🛫</h1>
-                        <p className="text-slate-500 font-medium italic">"The world is a book and those who do not travel read only one page."</p>
+                        <h1 className="text-4xl font-extrabold tracking-tight dark:text-white">Your Journeys 🛥</h1>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium italic">"The world is a book and those who do not travel read only one page."</p>
                     </div>
                     <div className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold border border-indigo-100 italic">
                         {trips.length} {trips.length === 1 ? 'Trip' : 'Trips'} Planned
@@ -99,59 +99,59 @@ function Trips() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     {/* Create Trip Form */}
                     <div className="lg:col-span-5">
-                        <div className="glass p-8 rounded-3xl shadow-xl shadow-slate-200/50 sticky top-32">
-                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                        <div className="glass p-8 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 sticky top-32">
+                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 dark:text-white">
                                 <span className="text-indigo-600">✨</span>
                                 New Adventure
                             </h2>
 
                             <form onSubmit={handleSubmit} className="space-y-5">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Destination</label>
+                                    <label className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">Destination</label>
                                     <input
                                         type="text"
                                         name="destination"
                                         placeholder="Where to next?"
                                         value={form.destination}
                                         onChange={handleChange}
-                                        className="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm"
+                                        className="w-full p-4 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-700 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm"
                                         required
                                     />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Start Date</label>
+                                        <label className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">Start Date</label>
                                         <input
                                             type="date"
                                             name="startDate"
                                             value={form.startDate}
                                             onChange={handleChange}
-                                            className="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm"
+                                            className="w-full p-4 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-700 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm"
                                             required
                                         />
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">End Date</label>
+                                        <label className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">End Date</label>
                                         <input
                                             type="date"
                                             name="endDate"
                                             value={form.endDate}
                                             onChange={handleChange}
-                                            className="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm"
+                                            className="w-full p-4 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-700 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm"
                                             required
                                         />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Category</label>
+                                    <label className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">Category</label>
                                     <select
                                         name="category"
                                         value={form.category}
                                         onChange={handleChange}
-                                        className="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm font-semibold text-slate-700"
+                                        className="w-full p-4 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-700 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm font-semibold text-slate-700"
                                     >
                                         {Object.entries(categoryConfig)
                                             .filter(([cat]) => cat !== 'Magic AI') // Hide Magic AI from manual selection
@@ -173,10 +173,10 @@ function Trips() {
 
                     {/* Trip List */}
                     <div className="lg:col-span-7 space-y-6">
-                        <h2 className="text-xl font-bold mb-4 text-slate-400 uppercase tracking-widest">Upcoming & Past</h2>
+                        <h2 className="text-xl font-bold mb-4 text-slate-400 dark:text-slate-500 uppercase tracking-widest">Upcoming & Past</h2>
                         
                         {trips.length === 0 ? (
-                            <div className="glass p-12 rounded-3xl text-center border-dashed border-2 border-slate-200 bg-white/30">
+                            <div className="glass p-12 rounded-3xl text-center border-dashed border-2 border-slate-200 dark:border-slate-700 bg-white/30 dark:bg-slate-800/30">
                                 <div className="text-6xl mb-4 opacity-50">🏔️</div>
                                 <h3 className="text-xl font-bold text-slate-400">No destinations yet</h3>
                                 <p className="text-slate-400 text-sm italic">Use the form to add your travel plans.</p>
@@ -190,13 +190,13 @@ function Trips() {
                                 >
                                     <div className="absolute top-0 right-0 w-2 h-full bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-3xl group-hover:bg-indigo-50 transition-colors shrink-0">
-                                        🏝️
+                                    <div className="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-3xl group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/40 transition-colors shrink-0">
+                                        🏕️
                                     </div>
 
                                     <div className="flex-grow">
                                         <div className="flex items-center gap-3 mb-1">
-                                            <h3 className="text-2xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors uppercase">
+                                            <h3 className="text-2xl font-bold text-slate-800 dark:text-white group-hover:text-indigo-600 transition-colors uppercase">
                                                 {trip.destination}
                                             </h3>
                                             <span 
