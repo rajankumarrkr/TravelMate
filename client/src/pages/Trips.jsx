@@ -7,7 +7,18 @@ function Trips() {
         destination: '',
         startDate: '',
         endDate: '',
+        category: 'Other',
     });
+
+    const categoryConfig = {
+        'Adventure': { icon: '🧗', color: 'text-amber-600 bg-amber-50 border-amber-200' },
+        'Family': { icon: '👨‍👩‍👧', color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
+        'Solo': { icon: '🎒', color: 'text-purple-600 bg-purple-50 border-purple-200' },
+        'Romantic': { icon: '💕', color: 'text-rose-600 bg-rose-50 border-rose-200' },
+        'Business': { icon: '💼', color: 'text-sky-600 bg-sky-50 border-sky-200' },
+        'Magic AI': { icon: '✨', color: 'text-indigo-600 bg-indigo-50 border-indigo-200' },
+        'Other': { icon: '📍', color: 'text-slate-600 bg-slate-50 border-slate-200' },
+    };
 
     const [trips, setTrips] = useState([]);
     const navigate = useNavigate();
@@ -48,6 +59,7 @@ function Trips() {
                 destination: '',
                 startDate: '',
                 endDate: '',
+                category: 'Other',
             });
 
             fetchTrips();
@@ -133,6 +145,24 @@ function Trips() {
                                     </div>
                                 </div>
 
+                                <div className="space-y-2">
+                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Category</label>
+                                    <select
+                                        name="category"
+                                        value={form.category}
+                                        onChange={handleChange}
+                                        className="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all shadow-sm font-semibold text-slate-700"
+                                    >
+                                        {Object.entries(categoryConfig)
+                                            .filter(([cat]) => cat !== 'Magic AI') // Hide Magic AI from manual selection
+                                            .map(([cat, config]) => (
+                                                <option key={cat} value={cat}>
+                                                    {config.icon} {cat}
+                                                </option>
+                                        ))}
+                                    </select>
+                                </div>
+
                                 <button className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-black hover:shadow-2xl transition-all active:scale-95 flex items-center justify-center gap-2 mt-4 group">
                                     <span>Create Trip</span>
                                     <span className="group-hover:translate-x-1 transition-transform">🚀</span>
@@ -165,9 +195,16 @@ function Trips() {
                                     </div>
 
                                     <div className="flex-grow">
-                                        <h3 className="text-2xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors mb-1 uppercase">
-                                            {trip.destination}
-                                        </h3>
+                                        <div className="flex items-center gap-3 mb-1">
+                                            <h3 className="text-2xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors uppercase">
+                                                {trip.destination}
+                                            </h3>
+                                            <span 
+                                                className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg border ${categoryConfig[trip.category || 'Other'].color}`}
+                                            >
+                                                {categoryConfig[trip.category || 'Other'].icon} {trip.category || 'Other'}
+                                            </span>
+                                        </div>
                                         <div className="flex items-center gap-2 text-sm font-semibold text-slate-400">
                                             <span>📅</span>
                                             <span>

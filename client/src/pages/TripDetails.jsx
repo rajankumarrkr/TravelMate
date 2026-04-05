@@ -62,6 +62,16 @@ function TripDetails() {
         );
     }
 
+    const categoryConfig = {
+        'Adventure': { icon: '🧗', color: 'text-amber-600 bg-amber-50/90 border-amber-200' },
+        'Family': { icon: '👨‍👩‍👧', color: 'text-emerald-600 bg-emerald-50/90 border-emerald-200' },
+        'Solo': { icon: '🎒', color: 'text-purple-600 bg-purple-50/90 border-purple-200' },
+        'Romantic': { icon: '💕', color: 'text-rose-600 bg-rose-50/90 border-rose-200' },
+        'Business': { icon: '💼', color: 'text-sky-600 bg-sky-50/90 border-sky-200' },
+        'Magic AI': { icon: '✨', color: 'text-indigo-600 bg-indigo-50/90 border-indigo-200' },
+        'Other': { icon: '📍', color: 'text-slate-600 bg-slate-50/90 border-slate-200' },
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 pt-28 pb-20 px-6 sm:px-10">
             <div className="max-w-6xl mx-auto space-y-12">
@@ -73,10 +83,11 @@ function TripDetails() {
                     
                     <div className="relative z-20 space-y-2">
                         <div className="flex items-center gap-3">
-                            <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">Destinations</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                            <span className={`px-3 py-1 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-[0.2em] border ${categoryConfig[trip.category || 'Other'].color}`}>
+                                {categoryConfig[trip.category || 'Other'].icon} {trip.category || 'Other'}
+                            </span>
                         </div>
-                        <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase italic italic">
+                        <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase italic">
                             {trip.destination}
                         </h1>
                         <p className="text-indigo-100 font-bold tracking-widest text-xs">

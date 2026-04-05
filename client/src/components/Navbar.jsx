@@ -19,6 +19,9 @@ function Navbar() {
                 <div className="flex items-center gap-6">
                     {token ? (
                         <>
+                            <Link to="/ai-planner" className="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-2 rounded-xl border border-indigo-100/50 hover:bg-indigo-600 hover:text-white transition-all group">
+                                <span className="mr-1 group-hover:animate-bounce inline-block">✨</span> Magic AI
+                            </Link>
                             <Link to="/dashboard" className="text-sm font-medium hover:text-indigo-600">Dashboard</Link>
                             <Link to="/trips" className="text-sm font-medium hover:text-indigo-600">My Trips</Link>
                             <button 

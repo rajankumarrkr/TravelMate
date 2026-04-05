@@ -57,6 +57,14 @@ function Dashboard() {
                             <span className="text-xl">✈️</span>
                         </Link>
 
+                        <Link
+                            to="/ai-planner"
+                            className="px-6 py-3 bg-white text-indigo-600 border border-indigo-100 rounded-2xl font-bold hover:shadow-xl hover:shadow-indigo-100 transition-all flex items-center gap-2"
+                        >
+                            <span className="text-xl">✨</span>
+                            <span>Magic AI Planner</span>
+                        </Link>
+
                         <button
                             onClick={handleLogout}
                             className="px-6 py-3 glass text-rose-600 rounded-2xl font-bold hover:bg-rose-50 transition-all border border-rose-100"

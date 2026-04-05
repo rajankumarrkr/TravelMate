@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import Trips from './pages/Trips';
 import TripDetails from './pages/TripDetails';
+import AITripPlanner from './pages/AITripPlanner';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -39,6 +40,14 @@ function App() {
           element={
             <PrivateRoute>
               <TripDetails />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/ai-planner"
+          element={
+            <PrivateRoute>
+              <AITripPlanner />
             </PrivateRoute>
           }
         />

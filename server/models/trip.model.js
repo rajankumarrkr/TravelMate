@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const itinerarySchema = new mongoose.Schema({
     day: Number,
-    plan: String,
+    title: String,
+    activities: [String],
+    foodSuggestion: String,
+    staySuggestion: String,
+    estimatedCost: Number,
 });
 
 const tripSchema = new mongoose.Schema(
@@ -25,6 +29,11 @@ const tripSchema = new mongoose.Schema(
             required: true,
         },
         itinerary: [itinerarySchema],
+        category: {
+            type: String,
+            enum: ['Adventure', 'Family', 'Solo', 'Romantic', 'Business', 'Other', 'Magic AI'],
+            default: 'Other',
+        },
         budget: {
             type: Number,
             default: 0,
