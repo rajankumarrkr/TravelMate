@@ -21,7 +21,7 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cors());
-app.use(helmet());
+// app.use(helmet());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/expenses', expenseRoutes);
