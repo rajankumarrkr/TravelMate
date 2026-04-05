@@ -17,14 +17,21 @@ function Trips() {
     const [trips, setTrips] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [fetchLoading, setFetchLoading] = useState(true);
+    const [fetchError, setFetchError] = useState(null);
     const navigate = useNavigate();
 
     const fetchTrips = async () => {
+        setFetchLoading(true);
+        setFetchError(null);
         try {
             const res = await getTrips();
-            setTrips(res.data.data);
+            setTrips(res.data.data || []);
         } catch (err) {
-            console.error(err);
+            console.error('fetchTrips error:', err);
+            setFetchError(err.response?.data?.message || 'Could not connect to server. Make sure backend is running.');
+        } finally {
+            setFetchLoading(false);
         }
     };
 
@@ -128,7 +135,23 @@ function Trips() {
                 )}
 
                 {/* Trip List */}
-                {trips.length === 0 ? (
+                {fetchLoading ? (
+                    <div className="glass rounded-3xl p-16 text-center">
+                        <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-slate-400 text-sm font-semibold">Loading your trips…</p>
+                    </div>
+                ) : fetchError ? (
+                    <div className="glass rounded-3xl p-10 text-center border-2 border-dashed border-rose-200 dark:border-rose-900">
+                        <div className="text-4xl mb-3">⚠️</div>
+                        <h3 className="text-base font-black text-rose-500 mb-2">Something went wrong</h3>
+                        <p className="text-slate-400 text-xs mb-4">{fetchError}</p>
+                        <button
+                            onClick={fetchTrips}
+                            className="px-5 py-2.5 bg-indigo-600 text-white rounded-2xl font-bold text-sm hover:bg-indigo-700 transition-all">
+                            Retry
+                        </button>
+                    </div>
+                ) : trips.length === 0 ? (
                     <div className="glass rounded-3xl p-16 text-center border-2 border-dashed border-slate-200 dark:border-slate-700">
                         <div className="text-6xl mb-4">🏔️</div>
                         <h3 className="text-lg font-black text-slate-400 dark:text-slate-500">No trips yet</h3>
