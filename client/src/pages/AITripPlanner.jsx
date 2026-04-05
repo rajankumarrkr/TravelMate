@@ -58,10 +58,10 @@ function AITripPlanner() {
                     <div className="inline-block px-4 py-1 bg-indigo-100 rounded-full text-indigo-600 text-xs font-bold uppercase tracking-widest border border-indigo-200 animate-pulse">
                         Supercharged by AI ⚡
                     </div>
-                    <h1 className="text-5xl md:text-6xl font-black text-slate-800 tracking-tight drop-shadow-sm">
+                    <h1 className="text-5xl md:text-6xl font-black text-slate-800 dark:text-white tracking-tight drop-shadow-sm">
                         Magic Trip Planner
                     </h1>
-                    <p className="text-slate-600 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+                    <p className="text-slate-600 dark:text-slate-300 text-lg md:text-xl font-medium max-w-2xl mx-auto">
                         Describe your dream trip in one sentence, and let our AI craft the perfect itinerary for you.
                     </p>
                 </div>
@@ -72,7 +72,7 @@ function AITripPlanner() {
                     
                     <form onSubmit={handleGenerate} className="space-y-6 relative z-10">
                         <textarea
-                            className="w-full p-6 bg-white/60 border border-slate-200 rounded-2xl text-slate-800 placeholder:text-slate-400 text-xl font-medium focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all min-h-[120px] shadow-sm"
+                            className="w-full p-6 bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder-slate-500 text-xl font-medium focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all min-h-[120px] shadow-sm"
                             placeholder="e.g., 5-day luxury adventure in Bali with beach clubs and surfing..."
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
@@ -80,13 +80,13 @@ function AITripPlanner() {
                         />
                         
                         <div className="flex flex-wrap gap-3">
-                            <span className="text-slate-500 text-sm font-bold uppercase tracking-wider ml-1 self-center">Quick Ideas:</span>
+                            <span className="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wider ml-1 self-center">Quick Ideas:</span>
                             {['3-day budget Delhi', 'Honeymoon in Goa', 'Weekend trek in Munnar'].map(idea => (
                                 <button
                                     key={idea}
                                     type="button"
                                     onClick={() => setPrompt(idea)}
-                                    className="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-slate-600 hover:text-indigo-600 text-sm transition-all active:scale-95 shadow-sm"
+                                    className="px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-all active:scale-95 shadow-sm"
                                 >
                                     {idea}
                                 </button>
@@ -117,8 +117,8 @@ function AITripPlanner() {
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-700">
                         <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-4">
                             <div className="space-y-1">
-                                <h2 className="text-3xl font-black text-slate-800">{itinerary.destination}</h2>
-                                <p className="text-slate-500 font-bold uppercase tracking-widest text-sm">
+                                <h2 className="text-3xl font-black text-slate-800 dark:text-white">{itinerary.destination}</h2>
+                                <p className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-sm">
                                     {itinerary.totalDays} Days • Estimated Budget: ₹{itinerary.estimatedTotalCost.toLocaleString()}
                                 </p>
                             </div>
@@ -134,35 +134,35 @@ function AITripPlanner() {
                         <div className="grid grid-cols-1 gap-8">
                             {itinerary.itinerary.map((day) => (
                                 <div key={day.day} className="glass overflow-hidden rounded-3xl flex flex-col md:flex-row group hover:shadow-xl transition-all border border-slate-100">
-                                    <div className="md:w-32 bg-indigo-50 flex flex-col items-center justify-center p-6 border-b md:border-b-0 md:border-r border-slate-100 transition-colors">
-                                        <span className="text-slate-400 text-xs font-black uppercase tracking-tighter">Day</span>
-                                        <span className="text-5xl font-black text-indigo-600">{day.day}</span>
+                                    <div className="md:w-32 bg-indigo-50 dark:bg-indigo-900/30 flex flex-col items-center justify-center p-6 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800/50 transition-colors">
+                                        <span className="text-slate-400 dark:text-slate-500 text-xs font-black uppercase tracking-tighter">Day</span>
+                                        <span className="text-5xl font-black text-indigo-600 dark:text-indigo-400">{day.day}</span>
                                     </div>
                                     <div className="flex-1 p-8 space-y-6">
-                                        <h3 className="text-2xl font-bold text-slate-800">{day.title}</h3>
+                                        <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{day.title}</h3>
                                         
                                         <ul className="space-y-3">
                                             {day.activities.map((act, i) => (
-                                                <li key={i} className="flex items-start gap-3 text-slate-600 font-medium">
+                                                <li key={i} className="flex items-start gap-3 text-slate-600 dark:text-slate-300 font-medium">
                                                     <span className="text-emerald-500 mt-1">✓</span>
                                                     {act}
                                                 </li>
                                             ))}
                                         </ul>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-slate-800/50">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center text-lg">🍔</div>
+                                                <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/30 rounded-xl flex items-center justify-center text-lg">🍔</div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Eat</span>
-                                                    <span className="text-slate-700 text-sm font-bold">{day.foodSuggestion}</span>
+                                                    <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest">Eat</span>
+                                                    <span className="text-slate-700 dark:text-slate-300 text-sm font-bold">{day.foodSuggestion}</span>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-lg">🏨</div>
+                                                <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-lg">🏨</div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Stay</span>
-                                                    <span className="text-slate-700 text-sm font-bold">{day.staySuggestion}</span>
+                                                    <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest">Stay</span>
+                                                    <span className="text-slate-700 dark:text-slate-300 text-sm font-bold">{day.staySuggestion}</span>
                                                 </div>
                                             </div>
                                         </div>

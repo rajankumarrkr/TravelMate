@@ -107,8 +107,8 @@ function TripMap({ destination }) {
                     <Popup className="font-bold">
                         <div className="text-center p-1">
                             <div className="text-lg mb-1">📍</div>
-                            <h3 className="font-black text-slate-800 text-sm">{destination}</h3>
-                            <p className="text-xs text-slate-500 mt-0.5 max-w-[160px]">{coords.displayName?.split(',').slice(0, 3).join(',')}</p>
+                            <h3 className="font-black text-slate-800 dark:text-white text-sm">{destination}</h3>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 max-w-[160px]">{coords.displayName?.split(',').slice(0, 3).join(',')}</p>
                         </div>
                     </Popup>
                 </Marker>

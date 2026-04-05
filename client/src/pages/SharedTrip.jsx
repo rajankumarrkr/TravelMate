@@ -22,12 +22,12 @@ function SharedTrip() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-                <div className="glass p-12 rounded-[2.5rem] text-center max-w-lg">
+            <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-6">
+                <div className="glass p-12 rounded-[2.5rem] text-center max-w-lg dark:bg-slate-800/80">
                     <div className="text-6xl mb-6">💔</div>
-                    <h2 className="text-2xl font-black text-slate-800 tracking-tight mb-2">Trip Not Found</h2>
-                    <p className="text-slate-500 font-medium mb-8">This shared link is invalid or may have expired. Please ask your friend to generate a new link!</p>
-                    <Link to="/" className="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
+                    <h2 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight mb-2">Trip Not Found</h2>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium mb-8">This shared link is invalid or may have expired. Please ask your friend to generate a new link!</p>
+                    <Link to="/" className="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 dark:shadow-none">
                         Take me Home
                     </Link>
                 </div>
@@ -54,7 +54,7 @@ function SharedTrip() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 pt-10 pb-20 px-6 sm:px-10">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-10 pb-20 px-6 sm:px-10">
             <div className="max-w-6xl mx-auto space-y-12">
                 
                 {/* Hero Header */}
@@ -86,24 +86,24 @@ function SharedTrip() {
                 <div className="grid grid-cols-1 gap-12">
                     {/* Itinerary Section */}
                     <div>
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
-                            <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
+                        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200 dark:border-slate-800">
+                            <h2 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight flex items-center gap-3">
                                 <span>🗺️</span>
                                 <span>Journey Itinerary</span>
                             </h2>
-                            <div className="px-4 py-2 bg-slate-100 rounded-2xl text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                            <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-2xl text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                                 {trip.itinerary.length} Days Planned
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {trip.itinerary.map((item) => (
-                                <div key={item.day} className="glass group hover:bg-white hover:shadow-2xl hover:shadow-indigo-100 rounded-[2rem] p-8 relative transition-all border-transparent hover:border-indigo-100 border">
-                                    <div className="absolute top-8 right-8 text-4xl font-black text-indigo-50 group-hover:text-indigo-100 transition-colors">
+                                <div key={item.day} className="glass group hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-indigo-100 dark:hover:shadow-indigo-900/20 rounded-[2rem] p-8 relative transition-all border-transparent hover:border-indigo-100 dark:hover:border-indigo-900 border">
+                                    <div className="absolute top-8 right-8 text-4xl font-black text-indigo-50 dark:text-slate-800 group-hover:text-indigo-100 dark:group-hover:text-slate-700 transition-colors">
                                         {item.day < 10 ? `0${item.day}` : item.day}
                                     </div>
-                                    <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">Day {item.day}</h3>
-                                    <p className="text-slate-700 leading-relaxed font-semibold">
+                                    <h3 className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">Day {item.day}</h3>
+                                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-semibold">
                                         {item.plan}
                                     </p>
                                 </div>
@@ -113,9 +113,9 @@ function SharedTrip() {
 
                     {/* Trip Memories / Gallery Section */}
                     {trip.photos && trip.photos.length > 0 && (
-                        <div className="mt-12 border-t border-slate-200 pt-16">
+                        <div className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-16">
                             <div className="flex items-center justify-between mb-8">
-                                <h2 className="text-3xl font-black tracking-tight flex items-center gap-3">
+                                <h2 className="text-3xl font-black tracking-tight flex items-center gap-3 text-slate-800 dark:text-white">
                                     <span>📸</span>
                                     <span>Trip Memories</span>
                                 </h2>
@@ -140,12 +140,12 @@ function SharedTrip() {
                     )}
                 </div>
 
-                <div className="text-center pt-12 pb-6 border-t border-slate-200">
-                    <p className="text-slate-400 font-bold tracking-widest text-xs uppercase mb-4">Powered by</p>
+                <div className="text-center pt-12 pb-6 border-t border-slate-200 dark:border-slate-800">
+                    <p className="text-slate-400 dark:text-slate-500 font-bold tracking-widest text-xs uppercase mb-4">Powered by</p>
                     <Link to="/" className="text-2xl font-black bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent inline-block hover:scale-105 transition-transform">
                         TravelMate ✈️
                     </Link>
-                    <p className="text-slate-500 font-medium text-sm mt-2">Plan your own incredible journeys today.</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium text-sm mt-2">Plan your own incredible journeys today.</p>
                 </div>
             </div>
         </div>
